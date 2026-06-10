@@ -1,0 +1,122 @@
+# Adrian Agdan — Job Scoring Profile
+# Hermes reads this file to score every job against your skills and preferences
+
+name: Adrian Agdan
+title: GoHighLevel Admin | CRM & Automation Specialist | GHL Certified Admin
+location: Philippines
+available: full-time
+timezone: US time zones (aligned)
+email: buildwithry@gmail.com
+portfolio: https://buildwithry.github.io/portfolio/
+
+# ─── SKILLS (used for scoring relevance) ───────────────────────────────────
+skills:
+  expert:
+    - GoHighLevel (GHL)
+    - GHL Workflows & Automations
+    - GHL Pipelines & Funnels
+    - GHL Phone Systems
+    - CRM Setup & Customization
+    - Webhook & API Integrations
+    - n8n
+    - Make (Integromat)
+    - Zapier
+    - Twilio / A2P 10DLC
+    - SMS & Email Campaigns
+    - Client Onboarding
+  intermediate:
+    - Vapi (AI Voice Agents)
+    - ElevenLabs
+    - Retell AI
+    - Voice AI
+    - Claude API / Anthropic
+    - REST APIs
+    - Meta Ads Integration
+    - Notion / ClickUp
+    - Python (learning)
+  industries:
+    - Digital Marketing
+    - Healthcare / Medical
+    - Construction
+    - E-Commerce
+    - Real Estate
+    - Finance
+
+certifications:
+  - GoHighLevel Certified Admin
+
+# ─── JOB PREFERENCES (scoring weights) ─────────────────────────────────────
+preferences:
+  job_types:
+    - Remote freelance        # highest preference
+    - Full-time remote        # high preference
+    - Part-time remote        # acceptable
+
+  target_roles:
+    - GHL Admin / Specialist
+    - CRM Automation Specialist
+    - AI Automation Specialist
+    - n8n Developer / Specialist
+    - Make / Zapier Automation Expert
+    - Voice AI Specialist
+    - Workflow Automation Specialist
+    - GoHighLevel Virtual Assistant
+    - AI Tools Specialist
+
+  # Keywords that signal a GREAT match (score boost)
+  green_flags:
+    - GoHighLevel
+    - GHL
+    - n8n
+    - Make
+    - Zapier
+    - Voice AI
+    - Vapi
+    - CRM automation
+    - workflow automation
+    - AI automation
+    - webhook
+    - Twilio
+    - automation specialist
+
+  # Keywords that signal a BAD match (score penalty)
+  red_flags:
+    - requires PHP / on-site
+    - data entry only
+    - no automation
+    - cold calling only
+    - heavy coding (C++, Java, .NET)
+
+  deal_breakers:
+    - time tracker required (Hubstaff, TimeDoctor, Clockify mandatory)
+    - micromanagement
+    - screenshots required
+    - activity monitoring software
+    - intro video required
+    - video application required
+
+  # Minimum rates (adjust as needed)
+  minimum_rate:
+    hourly_usd: 12
+    monthly_usd: 2000
+    note: "40hrs/week preferred. Will not accept time trackers or micromanagement."
+
+  # Platforms being monitored
+  platforms:
+    - OnlineJobs.ph
+    - Upwork
+    - JobStreet
+
+# ─── SCORING INSTRUCTIONS FOR CLAUDE ────────────────────────────────────────
+scoring_instructions: |
+  Score each job from 1–10 based on:
+  - Skill match: Does the job need skills Adrian has? (40% weight)
+  - Role fit: Is this the type of role Adrian targets? (30% weight)
+  - Green/red flags: Any keywords that boost or penalize the score? (20% weight)
+  - Rate/pay: Does it meet the minimum? (10% weight)
+
+  For each job return:
+  - score: 1-10
+  - match_reason: 1 sentence why it's a good/bad match
+  - apply_angle: What to highlight in the proposal/cover letter
+  - red_flags: Any concerns about this job

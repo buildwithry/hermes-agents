@@ -1,0 +1,32 @@
+{
+  "name": "Hermes — Daily Job Hunt",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "hours", "hoursInterval": 24 }]
+        }
+      },
+      "name": "Every Day 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/run",
+        "options": { "timeout": 120000 }
+      },
+      "name": "Trigger Hermes Pipeline",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [480, 300],
+      "notes": "Calls Python server which scrapes, scores with Claude, and sends Telegram digest"
+    }
+  ],
+  "connections": {
+    "Every Day 8AM": {
+      "main": [[{ "node": "Trigger Hermes Pipeline", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "notes": "Simple trigger — Hermes Python server handles all the intelligence.\nTo import: n8n → Workflows → Import from file → select this JSON."
+}
