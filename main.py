@@ -77,7 +77,10 @@ def run_full_pipeline():
         }
 
         print(f"[hermes] {len(matches)} matches. Sending Telegram digest...")
-        send_digest(scored, run_stats=run_stats)
+        try:
+            send_digest(scored, run_stats=run_stats)
+        except Exception as e:
+            print(f"[hermes] Telegram notification failed: {e}")
 
         return {"status": "done", **run_stats}
     except Exception as e:

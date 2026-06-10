@@ -1,4 +1,5 @@
 import os
+import time
 import certifi
 import requests
 
@@ -17,12 +18,14 @@ def send_digest(scored_jobs: list[dict], run_stats: dict = None) -> bool:
     all_success = True
 
     if not top_jobs:
-        _send_message(token, chat_id, "🤖 *Hermes Run Complete*\n\nNo strong matches this run. Check back next time.")
+        _send_message(token, chat_id, "🤖 <b>Hermes Run Complete</b>\n\nNo strong matches this run. Check back next time.")
     else:
-        for job in top_jobs:
+        for i, job in enumerate(top_jobs):
             success = _send_message(token, chat_id, _format_job(job))
             if not success:
                 all_success = False
+            if i < len(top_jobs) - 1:
+                time.sleep(0.5)
 
     if run_stats:
         _send_message(token, chat_id, _format_summary(run_stats))
@@ -38,19 +41,19 @@ def _format_job(job: dict) -> str:
     flags_line = f"⚠️ {red_flags}\n" if red_flags and red_flags.lower() not in ("none", "") else ""
 
     return (
-        f"{emoji} *{job['title']}*\n"
+        f"{emoji} <b>{job['title']}</b>\n"
         f"📍 {job['platform']} | 💰 {rate}\n"
         f"⭐ Score: {score}/10\n"
         f"💡 {job.get('match_reason', '')}\n"
         f"🎯 {job.get('apply_angle', '')}\n"
         f"{flags_line}"
-        f"🔗 [Apply]({job.get('url', '')})"
+        f"🔗 <a href=\"{job.get('url', '')}\">Apply</a>"
     )
 
 
 def _format_summary(stats: dict) -> str:
     return (
-        f"🤖 *Hermes Run Complete*\n"
+        f"🤖 <b>Hermes Run Complete</b>\n"
         f"📊 Scraped: {stats.get('total_scraped', 0)} | "
         f"🆕 New: {stats.get('new_jobs', 0)} | "
         f"✅ Matches (6+): {stats.get('matches', 0)}\n"
@@ -64,7 +67,7 @@ def _send_message(token: str, chat_id: str, text: str) -> bool:
     payload = {
         "chat_id": chat_id,
         "text": text,
-        "parse_mode": "Markdown",
+        "parse_mode": "HTML",
         "disable_web_page_preview": True,
     }
     try:

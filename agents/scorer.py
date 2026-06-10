@@ -4,6 +4,7 @@ Called by n8n via POST /score-jobs
 """
 
 import os
+import json
 import yaml
 import anthropic
 from pathlib import Path
@@ -50,7 +51,6 @@ Reply raw JSON only:
         messages=[{"role": "user", "content": prompt}]
     )
 
-    import json
     try:
         raw = message.content[0].text.strip()
         clean = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
