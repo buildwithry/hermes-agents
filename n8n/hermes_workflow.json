@@ -1,32 +1,61 @@
 {
-  "name": "Hermes — Daily Job Hunt",
+  "name": "Hermes — Daily Job Hunt v2",
   "nodes": [
     {
       "parameters": {
         "rule": {
-          "interval": [{ "field": "hours", "hoursInterval": 24 }]
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * *"
+            }
+          ]
         }
       },
-      "name": "Every Day 8AM",
+      "name": "6PM PH (10:00 UTC)",
       "type": "n8n-nodes-base.scheduleTrigger",
-      "position": [240, 300]
+      "typeVersion": 1,
+      "position": [240, 200],
+      "notes": "6:00 PM Philippines time = 10:00 UTC. Catches same-day PH job posts."
     },
     {
       "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 17 * * *"
+            }
+          ]
+        }
+      },
+      "name": "1AM PH (17:00 UTC)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 400],
+      "notes": "1:00 AM Philippines time = 17:00 UTC. Catches US workday job posts (US Eastern 1PM)."
+    },
+    {
+      "parameters": {
+        "method": "POST",
         "url": "http://localhost:8000/run",
         "options": { "timeout": 120000 }
       },
       "name": "Trigger Hermes Pipeline",
       "type": "n8n-nodes-base.httpRequest",
-      "position": [480, 300],
-      "notes": "Calls Python server which scrapes, scores with Claude, and sends Telegram digest"
+      "typeVersion": 4,
+      "position": [520, 300],
+      "notes": "Calls Python server — scrapes all 4 sources, deduplicates via SQLite, scores new jobs with Claude Haiku, sends top 10 to Telegram."
     }
   ],
   "connections": {
-    "Every Day 8AM": {
+    "6PM PH (10:00 UTC)": {
+      "main": [[{ "node": "Trigger Hermes Pipeline", "type": "main", "index": 0 }]]
+    },
+    "1AM PH (17:00 UTC)": {
       "main": [[{ "node": "Trigger Hermes Pipeline", "type": "main", "index": 0 }]]
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Simple trigger — Hermes Python server handles all the intelligence.\nTo import: n8n → Workflows → Import from file → select this JSON."
+  "notes": "Hermes v2 — 4 job sources, SQLite deduplication, per-job Telegram messages.\nImport: n8n → Workflows → Import from file → select this JSON."
 }
